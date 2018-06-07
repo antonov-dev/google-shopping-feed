@@ -103,7 +103,7 @@ class Item
     {
         $node = new Node('link');
         $link = $this->safeCharEncodeURL($link);
-        $this->nodes['link'] = $node->value($link)->addCdata();
+        $this->nodes['link'] = $node->value($link);
     }
 
     /**
@@ -149,7 +149,7 @@ class Item
     public function condition($condition)
     {
         $node = new Node('condition');
-        $this->nodes['condition'] = $node->value($condition)->_namespace($this->namespace)->addCdata();
+        $this->nodes['condition'] = $node->value($condition)->_namespace($this->namespace);
     }
 
     /**
@@ -168,7 +168,7 @@ class Item
     {
         $node = new Node('image_link');
         $imageLink = $this->safeCharEncodeURL(urldecode($imageLink));
-        $this->nodes['image_link'] = $node->value($imageLink)->_namespace($this->namespace)->addCdata();
+        $this->nodes['image_link'] = $node->value($imageLink)->_namespace($this->namespace);
     }
 
     /**
@@ -257,24 +257,11 @@ class Item
     }
 
     /**
-     * @param $code
-     * @param $service
-     * @param $cost
-     * @param null $region
+     * @param Shipping $shiping
      */
-    public function shipping($code, $service, $cost, $region = null)
+    public function shipping(Shipping $shiping)
     {
-        $node = new Node('shipping');
-        $value = "<g:country>{$code}</g:country><g:service>{$service}</g:service><g:price>{$cost}</g:price>";
-
-        if($region) {
-          $value .= "<g:region>{$region}</g:region>";
-        }
-
-        if (! isset($this->nodes['shipping'])) {
-            $this->nodes['shipping'] = array();
-        }
-        $this->nodes['shipping'][] = $node->value($value)->_namespace($this->namespace);
+        $this->nodes['shipping'][] = $shiping->getContent()->_namespace($this->namespace);
     }
 
     /**

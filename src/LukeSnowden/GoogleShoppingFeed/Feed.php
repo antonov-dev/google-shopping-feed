@@ -138,6 +138,15 @@ class Feed
     }
 
     /**
+     * @return Item
+     */
+    public function createShipping()
+    {
+        $item = new Shipping($this);
+        return $item;
+    }
+
+    /**
      * @param int $index
      */
     public function removeItemByIndex($index)
